@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.jonnydev.statistics.viewmodel.PostStatisticViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/StatisticsCategory">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/commentators_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_comment_grey_24dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/commentators_title"
+            style="@style/StatisticsTextView"
+            android:text="@string/commentators_title"
+            app:layout_constraintStart_toEndOf="@+id/commentators_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/commentators_count"
+            style="@style/StatisticsTextView"
+            android:hint="@string/category_count_hint"
+            android:text="@{viewModel.commentatorsCount}"
+            app:layout_constraintStart_toEndOf="@+id/commentators_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentators_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_centerVertical="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commentators_icon" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

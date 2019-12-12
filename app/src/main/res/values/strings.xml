@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Statistics</string>
+    <string name="views_title">Просмотры</string>
+    <string name="category_count_hint">count</string>
+    <string name="likes_title">Лайки</string>
+    <string name="commentators_title">Комментаторы</string>
+    <string name="mentions_title">Отметки</string>
+    <string name="bookmarks_title">Закладки</string>
+    <string name="reposts_title">Репосты</string>
+    <string name="user_nickname">nickname</string>
+</resources>
