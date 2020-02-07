@@ -12,68 +12,26 @@ import retrofit2.Response
 object PostRepo {
     private val mInratingClient = InratingClient.instance
 
-    suspend fun getPostStatistics(slug: String): PostStatistics? {
-        return try {
-            val response = mInratingClient.getPostStatistics(SlugRequestBody(slug))
+    suspend fun getPostStatistics(slug: String): PostStatistics? =
+        getResponseBody { mInratingClient.getPostStatistics(SlugRequestBody(slug)) }
 
-            when {
-                response.isSuccessful -> response.body()
-                else -> null
-            }
-        } catch (e: Exception) {
-            e.message?.let { logd(it) }
-            null
-        }
-    }
+    suspend fun getAllLikers(id: Long) : List<User>? =
+        getResponseBody { mInratingClient.getAllLikers(IdRequestBody(id)) }?.data
 
-    suspend fun getAllLikers(id: Long) : List<User>? {
-        return try {
-            val response = mInratingClient.getAllLikers(IdRequestBody(id))
+    suspend fun getAllCommentators(id: Long) : List<User>? =
+        getResponseBody { mInratingClient.getAllCommentators(IdRequestBody(id)) }?.data
 
-            getResponseBody(response)
-        } catch (e: Exception) {
-            e.message?.let { logd(it) }
-            null
-        }
-    }
+    suspend fun getAllMentions(id: Long) : List<User>? =
+        getResponseBody { mInratingClient.getAllMentions(IdRequestBody(id)) }?.data
 
-    suspend fun getAllCommentators(id: Long) : List<User>? {
-        return try {
-            val response = mInratingClient.getAllCommentators(IdRequestBody(id))
+    suspend fun getAllReposters(id: Long) : List<User>? =
+        getResponseBody { mInratingClient.getAllReposters(IdRequestBody(id)) }?.data
 
-            getResponseBody(response)
-        } catch (e: Exception) {
-            e.message?.let { logd(it) }
-            null
-        }
-    }
-
-    suspend fun getAllMentions(id: Long) : List<User>? {
-        return try {
-            val response = mInratingClient.getAllMentions(IdRequestBody(id))
-
-            getResponseBody(response)
-        } catch (e: Exception) {
-            e.message?.let { logd(it) }
-            null
-        }
-    }
-
-    suspend fun getAllReposters(id: Long) : List<User>? {
-        return try {
-            val response = mInratingClient.getAllReposters(IdRequestBody(id))
-
-            getResponseBody(response)
-        } catch (e: Exception) {
-            e.message?.let { logd(it) }
-            null
-        }
-    }
-
-    private fun getResponseBody(response: Response<UserList>): List<User>? {
-        return when {
-            response.isSuccessful -> response.body()?.data
-            else -> null
-        }
+    private inline fun <T> getResponseBody(getResponse: () -> Response<T>): T? = try {
+        val response = getResponse()
+        if (response.isSuccessful) response.body() else null
+    } catch (e: Exception) {
+        e.message?.let { logd(it) }
+        null
     }
 }
